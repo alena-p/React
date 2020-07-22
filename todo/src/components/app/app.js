@@ -16,6 +16,16 @@ class App extends Component {
     ]
   }
 
+  deleteItem = (id) => {
+    this.setState((state) => {
+      return {
+        todoData: state.todoData.filter((item) => {
+          return item.id !== id;
+        })
+      }
+    })
+  }
+
   render() {
     
     const { todoData } = this.state;
@@ -27,7 +37,7 @@ class App extends Component {
           <SearchPanel />
           <ItemStatusFilter />
         </div>
-        <TodoList todos={todoData} onDeleted={(id) => {console.log('del', id)}} />
+        <TodoList todos={todoData} onDeleted={this.deleteItem} />
       </div>
     )
   }
