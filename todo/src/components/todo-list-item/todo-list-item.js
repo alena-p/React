@@ -6,7 +6,6 @@ export default class TodoListItem extends Component {
 
   state = {
     done: false,
-    important: false,
   }
 
   onLabelClick = () => {
@@ -16,21 +15,13 @@ export default class TodoListItem extends Component {
       }
     })
   };
-
-  onMarkImportant = () => {
-    this.setState((state) => {
-      return {
-        important: !state.important
-      }
-    })
-  }
   
 
   render() {
-    const { label, onDeleted } = this.props;
-    const { done, important } = this.state;
+    const { label, onDeleted, toggleImportant, important } = this.props;
+    const { done } = this.state;
 
-    let classNames = 'todo-list-item'
+    let classNames = 'todo-list-item';
 
     if(done) {
       classNames = `${classNames} done`
@@ -50,7 +41,7 @@ export default class TodoListItem extends Component {
   
         <button type="button"
                 className="btn btn-outline-success btn-sm float-right"
-                onClick={this.onMarkImportant}>
+                onClick={toggleImportant}>
           <i className="fa fa-exclamation" />
         </button>
   
