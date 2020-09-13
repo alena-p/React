@@ -44,7 +44,16 @@ class App extends Component {
   }
 
   onToggleDone = (id) => {
-
+    this.setState((state) => {
+      state.todoData.forEach(item => {
+        if(item.id === id) {
+          item.done = !item.done
+        }
+      });
+      return {
+        todoData: state.todoData
+      }
+    })
   }
 
   onToggleImportant = (id) => {
@@ -58,7 +67,6 @@ class App extends Component {
         todoData: state.todoData
       }
     })
-    console.log(`toggle important of ${id}`)
   }
 
   render() {
@@ -72,7 +80,7 @@ class App extends Component {
           <SearchPanel />
           <ItemStatusFilter />
         </div>
-        <TodoList todos={todoData} onDeleted={this.deleteItem} toggleImportant={this.onToggleImportant} />
+        <TodoList todos={todoData} onDeleted={this.deleteItem} toggleImportant={this.onToggleImportant} toggleDone={this.onToggleDone} />
         <ItemAddForm onAdd={this.addItem} />
       </div>
     )
