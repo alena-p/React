@@ -82,10 +82,12 @@ class App extends Component {
   render() {
     
     const { todoData } = this.state;
+    const done = this.state.todoData.filter((item) => {return item.done}).length;
+    const toDo = this.state.todoData.length - done;
 
     return (
       <div className="todo-app">
-        <AppHeader toDo={4} done={5} />
+        <AppHeader toDo={toDo} done={done} />
         <div className="top-panel d-flex">
           <SearchPanel />
           <ItemStatusFilter />
