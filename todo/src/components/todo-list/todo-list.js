@@ -5,13 +5,8 @@ import "./todo-list.css";
 
 export default class TodoList extends Component { 
 
-  state = {
-    todos: this.props.todos
-  }
-
   render() {
-    const { todos } = this.state;
-    const {onDeleted, toggleImportant} = this.props;
+    const {todos, onDeleted, toggleImportant} = this.props;
   
 
     return (
