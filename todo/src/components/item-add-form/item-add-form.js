@@ -11,7 +11,7 @@ export default class ItemAddForm extends Component {
 
     return (
       <div className="item-add-form">
-        <button type="button" className="btn btn-outline-secondary" onClick={() => onAdd('New Item', true)}>Add task</button>
+        <button type="button" className="btn btn-outline-secondary" onClick={() => onAdd('New Item')}>Add task</button>
       </div>
       
     )

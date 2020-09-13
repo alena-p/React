@@ -8,14 +8,26 @@ import ItemAddForm from '../item-add-form';
 import "./app.css";
 
 class App extends Component {
-
+  
+  maxId = 100;
+  
   state = {
     todoData: [
-      {label: 'Drink Coffee', important: false, id: 1},
-      {label: 'Make Aewsome App', important: true, id: 2},
-      {label: 'Have a lunch', important: false, id: 3 }
+      this.createTodoItem('Drink Coffee'),
+      this.createTodoItem('Make Aewsome App'),
+      this.createTodoItem('Have a lunch')
     ]
   }
+
+  createTodoItem(label) {
+    return {
+      label,
+      important: false,
+      done: false,
+      id: this.maxId++
+    }
+  }
+
 
   deleteItem = (id) => {
     this.setState((state) => {
@@ -27,12 +39,8 @@ class App extends Component {
     })
   }
 
-  addItem = (text, isImportant) => {
-    const id = this.state.todoData.length ? Math.max.apply(null, this.state.todoData.map(item => {
-      return item.id
-    })) + 1 : 1;
-
-    const newItem = {label: text, important: isImportant, id: id };
+  addItem = (text) => {
+    const newItem = this.createTodoItem(text);
 
     this.setState((state) => {
       const newTodoList = state.todoData.concat(newItem);
@@ -45,26 +53,28 @@ class App extends Component {
 
   onToggleDone = (id) => {
     this.setState((state) => {
-      state.todoData.forEach(item => {
+      const todoDataNew = [...state.todoData];
+      todoDataNew.forEach(item => {
         if(item.id === id) {
           item.done = !item.done
         }
       });
       return {
-        todoData: state.todoData
+        todoData: todoDataNew
       }
     })
   }
 
   onToggleImportant = (id) => {
     this.setState((state) => {
-      state.todoData.forEach(item => {
+      const todoDataNew = [...state.todoData];
+      todoDataNew.forEach(item => {
         if(item.id === id) {
           item.important = !item.important
         }
       });
       return {
-        todoData: state.todoData
+        todoData: todoDataNew
       }
     })
   }
