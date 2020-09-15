@@ -28,6 +28,16 @@ class App extends Component {
     }
   }
 
+  toggleProperty(arr, id, propName) {
+    const newArr = [...arr];
+    newArr.forEach(item => {
+      if(item.id === id) {
+        item[propName] = !item[propName]
+      }
+    });
+
+    return newArr;
+  }
 
   deleteItem = (id) => {
     this.setState((state) => {
@@ -40,41 +50,32 @@ class App extends Component {
   }
 
   addItem = (text) => {
-    const newItem = this.createTodoItem(text);
 
-    this.setState((state) => {
-      const newTodoList = state.todoData.concat(newItem);
+    if(text) {
+      const newItem = this.createTodoItem(text);
 
-      return {
-        todoData: newTodoList
-      }
-    })
+      this.setState((state) => {
+        const newTodoList = state.todoData.concat(newItem);
+
+        return {
+          todoData: newTodoList
+        }
+      })
+    }
   }
 
   onToggleDone = (id) => {
-    this.setState((state) => {
-      const todoDataNew = [...state.todoData];
-      todoDataNew.forEach(item => {
-        if(item.id === id) {
-          item.done = !item.done
-        }
-      });
+    this.setState(({todoData}) => {
       return {
-        todoData: todoDataNew
+        todoData: this.toggleProperty(todoData, id, "done")
       }
     })
   }
 
   onToggleImportant = (id) => {
-    this.setState((state) => {
-      const todoDataNew = [...state.todoData];
-      todoDataNew.forEach(item => {
-        if(item.id === id) {
-          item.important = !item.important
-        }
-      });
+    this.setState(({todoData}) => {
       return {
-        todoData: todoDataNew
+        todoData: this.toggleProperty(todoData, id, "important")
       }
     })
   }
@@ -82,8 +83,8 @@ class App extends Component {
   render() {
     
     const { todoData } = this.state;
-    const done = this.state.todoData.filter((item) => {return item.done}).length;
-    const toDo = this.state.todoData.length - done;
+    const done = todoData.filter((item) => {return item.done}).length;
+    const toDo = todoData.length - done;
 
     return (
       <div className="todo-app">
