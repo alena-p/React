@@ -24,7 +24,8 @@ class App extends Component {
       label,
       important: false,
       done: false,
-      id: this.maxId++
+      id: this.maxId++,
+      hidden: false
     }
   }
 
@@ -80,6 +81,32 @@ class App extends Component {
     })
   }
 
+  filter = (action) => {
+    this.setState(({todoData}) => {
+      let filteredTodoData = todoData.map((item) => {
+        switch (action) {
+          case "done":
+            if (item["done"] === false) {
+              item["hidden"] = true;
+            } else item["hidden"] = false;
+            break;
+          case "active":
+            if(item["done"] === true) {
+              item["hidden"] = true
+            } else item["hidden"] = false;
+            break; 
+          case "all":
+            item["hidden"] = false;
+            break;  
+        };
+        return item;
+      })
+      return {
+        todoData: filteredTodoData
+      }
+    })
+  }
+
   render() {
     
     const { todoData } = this.state;
@@ -91,7 +118,7 @@ class App extends Component {
         <AppHeader toDo={toDo} done={done} />
         <div className="top-panel d-flex">
           <SearchPanel />
-          <ItemStatusFilter />
+          <ItemStatusFilter filter={this.filter} />
         </div>
         <TodoList todos={todoData} onDeleted={this.deleteItem} toggleImportant={this.onToggleImportant} toggleDone={this.onToggleDone} />
         <ItemAddForm onAdd={this.addItem} />

@@ -19,6 +19,9 @@ export default class ItemAddForm extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     this.props.onAdd(this.state.item);
+    this.setState({
+      item: ''
+    })
   }
 
 
@@ -30,6 +33,7 @@ export default class ItemAddForm extends Component {
           className="form-control"
           onChange={this.onLabelChange}
           placeholder="What does need to be done?"
+          value={this.state.item}
         />
         <button 
           type="submit" 

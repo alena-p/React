@@ -7,14 +7,13 @@ export default class TodoList extends Component {
 
   render() {
     const {todos, onDeleted, toggleImportant, toggleDone} = this.props;
-  
 
     return (
       <ul className="list-group todo-list">
         {todos.map((item) => {
-          const {id, ...itemProps} = item;
+          const {id, hidden, ...itemProps} = item;
           return (
-            <li key={id} className="list-group-item">
+            <li key={id} className={`list-group-item ${hidden && 'hidden'}`}>
               <TodoListItem 
                 {...itemProps}
                 onDeleted={() => {onDeleted(id)}} 
